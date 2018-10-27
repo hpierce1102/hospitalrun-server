@@ -18,12 +18,27 @@ cache:
   - "$HOME/.cache"
   - "$hOME/.npm"
 
-script:
-- echo "No test scripts! Developers should create test scripts to be run here"
+jobs:
+  include:
+  - stage: "Test"
+    script: echo "start tests"
+  - stage: "Push Docker Images"
+    script: echo "Start push docker images"
+    skip_cleanup: true
+    on:
+      branch: master
+  - stage: "Deploy Server"
+    script: echo "start deploy"
+    skip_cleanup: true
+    on:
+      branch: master
 
-deploy:
-- provider: script
-  script: "./conf/travis-deploy.sh"
-  skip_cleanup: true
-  on:
-    branch: master
+#script:
+#- echo "No test scripts! Developers should create test scripts to be run here"
+#
+#deploy:
+#- provider: script
+#  script: "./conf/travis-deploy.sh"
+#  skip_cleanup: true
+#  on:
+#    branch: master
